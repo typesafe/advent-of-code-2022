@@ -20,4 +20,15 @@ export class InputFile {
       yield buffer;
     }
   }
+
+  static async *readChars(path: string) {
+    const s = fs.createReadStream(path, { encoding: "utf-8" });
+
+    for await (const chunk of s) {
+      for (const char of chunk) {
+        yield char;
+      }
+    }
+    s.close();
+  }
 }
